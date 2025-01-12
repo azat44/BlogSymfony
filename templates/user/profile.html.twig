@@ -1,0 +1,31 @@
+{% extends 'base.html.twig' %}
+
+{% block title %}Mon Profil{% endblock %}
+
+{% block body %}
+    <div style="max-width: 800px; margin: 20px auto; padding: 20px; background-color: white; border-radius: 8px; box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1); text-align: center;">
+        <h1 style="color: #007BFF; margin-bottom: 20px;">Mon Profil</h1>
+
+        {% if app.user %}
+            <div style="margin-bottom: 20px;">
+            <img src="{{ asset('images/gto1.jpg') }}" alt="Photo de profil" style="width: 150px; height: 150px; border-radius: 50%; box-shadow: 0 2px 5px rgba(0, 0, 0, 0.2);">
+            </div>
+
+            <p><strong>Nom :</strong> {{ app.user.lastName }}</p>
+            <p><strong>Prénom :</strong> {{ app.user.firstName }}</p>
+            <p><strong>Email :</strong> {{ app.user.email }}</p>
+            <p><strong>Âge :</strong> 22 ans</p> 
+            <p><strong>Rôles :</strong> {{ app.user.roles|join(', ') }}</p>
+
+            <div style="margin-top: 20px; padding: 15px; background-color: #f9f9f9; border-radius: 5px; font-style: italic; box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);">
+                "Je suis Eikichi Onizuka, 22 ans, célibataire et libre comme l'air!"
+            </div>
+        {% else %}
+            <p style="color: red; text-align: center;">Vous n'êtes pas connecté.</p>
+        {% endif %}
+
+        <div style="margin-top: 20px;">
+            <a href="{{ path('app_home') }}" style="text-decoration: none; padding: 10px 20px; background-color: #007BFF; color: white; border-radius: 5px;">Retour à l'accueil</a>
+        </div>
+    </div>
+{% endblock %}

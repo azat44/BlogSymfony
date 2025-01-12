@@ -17,12 +17,15 @@ security:
                 login_path: app_login
                 check_path: app_login
                 default_target_path: app_home
-
             logout:
                 path: app_logout
-                target: /
+                target: app_login
 
     access_control:
+
+
         - { path: ^/home, roles: [ROLE_ADMIN, ROLE_USER] }
         - { path: ^/categories, roles: [ROLE_ADMIN, ROLE_USER] }
         - { path: ^/articles, roles: [ROLE_ADMIN, ROLE_USER] }
+        - { path: ^/profile, roles: ROLE_USER }
+        - { path: ^/admin, roles: ROLE_ADMIN }

@@ -3,16 +3,22 @@
 {% block title %}{{ category.name }} - Articles{% endblock %}
 
 {% block body %}
-<header>
-    <h1>Articles dans la catégorie {{ category.name }}</h1>
+<header style="text-align: center; padding: 20px; background-color: #f4f4f9; border-bottom: 2px solid #007BFF;">
+    <h1 style="color: #007BFF;">Articles dans la catégorie {{ category.name }}</h1>
 </header>
 
-<section class="articles">
+<section style="max-width: 900px; margin: 20px auto; padding: 10px; text-align: center;">
     {% for article in articles %}
-        <div class="article">
-            <h3><a href="{{ path('app_article_details', { id: article.id }) }}">{{ article.title }}</a></h3>
-            <p>Posté par : {{ article.author.firstName }} {{ article.author.lastName }}</p>
+        <div style="display: inline-block; width: 80%; margin-bottom: 15px; padding: 10px; background: #fff; border: 1px solid #ddd; border-radius: 5px; text-align: center;">
+            <div>
+                <h3 style="margin: 0 0 5px;">
+                    <a href="{{ path('app_article_details', { id: article.id }) }}" style="color: #007BFF; text-decoration: none;">{{ article.title }}</a>
+                </h3>
+                <p style="margin: 0; font-size: 0.9rem; color: #555;">Posté par : {{ article.author.firstName }} {{ article.author.lastName }}</p>
+            </div>
         </div>
+    {% else %}
+        <p style="text-align: center; color: #777;">Aucun article disponible dans cette catégorie pour le moment.</p>
     {% endfor %}
 </section>
 {% endblock %}

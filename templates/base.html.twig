@@ -22,6 +22,14 @@
                     top: 0;
                     z-index: 1000;
                 }
+                .header .nav-links a {
+                    color: white;
+                    text-decoration: none;
+                    margin-right: 15px;
+                }
+                .header .nav-links a:hover {
+                    text-decoration: underline;
+                }
                 .header .logout-button {
                     color: white;
                     text-decoration: none;
@@ -34,20 +42,50 @@
                 .header .logout-button:hover {
                     background-color: #cc0000;
                 }
+
+                .flash-message {
+                    color: white;
+                    background-color: #28a745;
+                    padding: 10px;
+                    margin: 10px auto;
+                    border-radius: 5px;
+                    max-width: 800px;
+                    text-align: center;
+                }
             </style>
         {% endblock %}
     </head>
     <body>
-        <div class="header">
-            <div>
-                <a href="{{ path('app_home') }}" style="color: white; text-decoration: none;">Accueil</a>
+        <div class="header">    
+            <div class="nav-links">
+                <a href="{{ path('app_home') }}">Accueil</a>
+                {% if app.user %}
+                    {% if 'ROLE_ADMIN' in app.user.roles %}
+                        <a href="{{ path('admin_dashboard') }}">Admin</a>
+                    {% endif %}
+                    {% if 'ROLE_USER' in app.user.roles %}
+                        <a href="{{ path('user_profile') }}">Mon Profil</a>
+                    {% endif %}
+                        <a href="{{ path('app_langues') }}">Langues</a>
+
+                {% endif %}
             </div>
             <div>
                 {% if app.user %}
-                    <a href="{{ path('app_logout') }}" class="logout-button">Déconnexion</a>
+                    {% if 'ROLE_BANNED' in app.user.roles %}
+                        <span style="color: red; font-weight: bold;">Vous êtes banni.</span>
+                    {% else %}
+                        <a href="{{ path('app_logout') }}" class="logout-button">Déconnexion</a>
+                    {% endif %}
                 {% endif %}
             </div>
         </div>
+
+        {% for message in app.flashes('success') %}
+            <div class="flash-message">
+                {{ message }}
+            </div>
+        {% endfor %}
 
         {% block body %}{% endblock %}
     </body>

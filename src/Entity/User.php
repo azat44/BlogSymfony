@@ -52,7 +52,6 @@ class User implements UserInterface, PasswordAuthenticatedUserInterface
 
     public function eraseCredentials(): void
     {
-        // Si des données sensibles sont temporairement stockées, elles peuvent être supprimées ici
     }
 
     public function __construct()

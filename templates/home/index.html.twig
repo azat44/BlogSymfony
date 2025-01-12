@@ -53,8 +53,8 @@
     }
 
     .categories img {
-        width: 100px;
-        height: 100px;
+        width: 150px;
+        height: 150px;
         border-radius: 50%;
         margin-bottom: 10px;
         transition: transform 0.3s ease;
@@ -102,12 +102,13 @@
     {% for category in categories %}
         <div class="category">
             <a href="{{ path('app_category_articles', { id: category.id }) }}">
-                <img src="{{ asset('images/' ~ category.name | lower ~ '.jpg') }}" alt="{{ category.name }}">
+                <img src="{{ asset(category.image) }}" alt="{{ category.name }}">
                 <p>{{ category.name }}</p>
             </a>
         </div>
     {% endfor %}
 </section>
+
 
 
 <section class="articles">

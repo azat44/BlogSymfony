@@ -88,7 +88,7 @@ class AppFixtures extends Fixture
 
         $article3 = new Article();
         $article3->setTitle('L’avenir du professeur Onizuka')
-                 ->setContent('Est-ce une bonne idée de rester prof au Japon.')
+                 ->setContent('Est-ce une bonne idée de rester prof au Japon ?')
                  ->setCreatedAt(new \DateTimeImmutable('2025-01-05'))
                  ->setUpdatedAt(new \DateTimeImmutable('2025-01-06'))
                  ->setAuthor($admin)

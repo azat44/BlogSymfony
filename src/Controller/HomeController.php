@@ -16,8 +16,9 @@ class HomeController extends AbstractController
     public function index(EntityManagerInterface $entityManager): Response
     {
         if ($this->isGranted('ROLE_BANNED')) {
-            $this->addFlash('error', 'Vous n\'avez pas la permission d\'accéder à cette section.');
-            return $this->redirectToRoute('app_login');
+            return $this->render('banned.html.twig', [
+                'message' => 'Votre compte a été banni. Veuillez contacter un administrateur.',
+            ]);
         }
 
         $categories = $entityManager->getRepository(Category::class)->findAll();
@@ -35,8 +36,9 @@ class HomeController extends AbstractController
     public function showCategory(Category $category, EntityManagerInterface $entityManager): Response
     {
         if ($this->isGranted('ROLE_BANNED')) {
-            $this->addFlash('error', 'Vous n\'avez pas la permission d\'accéder à cette section.');
-            return $this->redirectToRoute('app_login');
+            return $this->render('banned.html.twig', [
+                'message' => 'Votre compte a été banni. Veuillez contacter un administrateur.',
+            ]);
         }
 
         $articles = $entityManager->getRepository(Article::class)->findBy(['category' => $category]);
@@ -51,8 +53,9 @@ class HomeController extends AbstractController
     public function showArticle(Article $article, EntityManagerInterface $entityManager): Response
     {
         if ($this->isGranted('ROLE_BANNED')) {
-            $this->addFlash('error', 'Vous n\'avez pas la permission d\'accéder à cette section.');
-            return $this->redirectToRoute('app_login');
+            return $this->render('banned.html.twig', [
+                'message' => 'Votre compte a été banni. Veuillez contacter un administrateur.',
+            ]);
         }
 
         $comments = $entityManager->getRepository(Comment::class)->findBy(['article' => $article]);

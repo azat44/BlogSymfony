@@ -12,10 +12,8 @@ class AuthController extends AbstractController
     #[Route('/login', name: 'app_login')]
     public function login(AuthenticationUtils $authenticationUtils): Response
     {
-        // Récupère l'erreur de connexion, s'il y en a une
         $error = $authenticationUtils->getLastAuthenticationError();
 
-        // Récupère le dernier email saisi par l'utilisateur
         $lastUsername = $authenticationUtils->getLastUsername();
 
         return $this->render('auth/login.html.twig', [
@@ -27,6 +25,5 @@ class AuthController extends AbstractController
     #[Route('/logout', name: 'app_logout')]
     public function logout(): void
     {
-        // Ce code ne sera jamais exécuté, Symfony gère la déconnexion automatiquement
     }
 }

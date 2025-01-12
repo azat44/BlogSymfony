@@ -1,0 +1,45 @@
+{% extends 'base.html.twig' %}
+
+{% block title %}Tableau de bord Admin{% endblock %}
+
+{% block body %}
+    <div style="max-width: 800px; margin: 20px auto; padding: 20px; background-color: white; border-radius: 8px; box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1); text-align: center;">
+        <h1 style="color: #007BFF; margin-bottom: 20px;">Tableau de bord Admin</h1>
+        
+        <div style="margin-bottom: 20px;">
+            <img src="{{ asset('images/gto5.jpg') }}" alt="Photo de profil" style="width: 150px; height: 150px; border-radius: 50%; box-shadow: 0 2px 5px rgba(0, 0, 0, 0.2);">
+        </div>
+        
+        <div style="margin-bottom: 20px;">
+            <p><strong>Nom :</strong> {{ app.user.lastName }}</p>
+            <p><strong>Prénom :</strong> {{ app.user.firstName }}</p>
+            <p><strong>Email :</strong> {{ app.user.email }}</p>
+            <p><strong>Rôles :</strong> {{ app.user.roles|join(', ') }}</p>
+        </div>
+        
+        <div style="margin-top: 30px;">
+            <h2 style="color: #007BFF; margin-bottom: 15px;">Liste des articles</h2>
+            <ul style="list-style: none; padding: 0;">
+                {% for article in articles %}
+                    <li style="margin-bottom: 15px; padding: 15px; background-color: #f9f9f9; border-radius: 8px; box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1); text-align: left;">
+                        <strong>{{ article.title }}</strong>
+                        <p>Catégorie : {{ article.category.name }}</p>
+                        <p>Auteur : {{ article.author.firstName }} {{ article.author.lastName }}</p>
+                        <form action="{{ path('admin_delete_article', { id: article.id }) }}" method="post" style="display: inline;">
+                            <input type="hidden" name="_token" value="{{ csrf_token('delete' ~ article.id) }}">
+                            <button type="submit" style="color: white; background-color: #FF4B4B; border: none; padding: 5px 10px; border-radius: 5px; cursor: pointer;">
+                                Supprimer
+                            </button>
+                        </form>
+                    </li>
+                {% else %}
+                    <li style="text-align: center; color: #777;">Aucun article disponible pour le moment.</li>
+                {% endfor %}
+            </ul>
+        </div>
+        
+        <div style="text-align: center; margin-top: 30px;">
+            <a href="{{ path('app_home') }}" style="text-decoration: none; padding: 10px 20px; background-color: #007BFF; color: white; border-radius: 5px;">Retour à l'accueil</a>
+        </div>
+    </div>
+{% endblock %}
