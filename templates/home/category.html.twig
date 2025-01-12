@@ -1,0 +1,18 @@
+{% extends 'base.html.twig' %}
+
+{% block title %}{{ category.name }} - Articles{% endblock %}
+
+{% block body %}
+<header>
+    <h1>Articles dans la catégorie {{ category.name }}</h1>
+</header>
+
+<section class="articles">
+    {% for article in articles %}
+        <div class="article">
+            <h3><a href="{{ path('app_article_details', { id: article.id }) }}">{{ article.title }}</a></h3>
+            <p>Posté par : {{ article.author.firstName }} {{ article.author.lastName }}</p>
+        </div>
+    {% endfor %}
+</section>
+{% endblock %}

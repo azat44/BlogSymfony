@@ -8,50 +8,64 @@ use App\Entity\Category;
 use App\Entity\Comment;
 use Doctrine\Bundle\FixturesBundle\Fixture;
 use Doctrine\Persistence\ObjectManager;
+use Symfony\Component\PasswordHasher\Hasher\UserPasswordHasherInterface;
 
 class AppFixtures extends Fixture
 {
+
+    private UserPasswordHasherInterface $passwordHasher;
+
+    public function __construct(UserPasswordHasherInterface $passwordHasher)
+    {
+        $this->passwordHasher = $passwordHasher;
+    }
+
     public function load(ObjectManager $manager): void
     {
 
         $category1 = new Category();
-        $category1->setName('Musique');
+        $category1->setName('Musique')
+                  ->setImage('images/gto1.jpg');
         $manager->persist($category1);
-
+        
         $category2 = new Category();
-        $category2->setName('Sport');
+        $category2->setName('Sport')
+                  ->setImage('images/gto2.jpg');
         $manager->persist($category2);
-
+        
         $category3 = new Category();
-        $category3->setName('Avenir');
+        $category3->setName('Avenir')
+                  ->setImage('images/gto5.jpg');
         $manager->persist($category3);
+        
 
         $categories = [$category1, $category2, $category3];
 
 
         $admin = new User();
         $admin->setEmail('admin@example.com')
-              ->setPassword(password_hash('adminpassword', PASSWORD_BCRYPT)) 
-              ->setFirstName('Admin')
-              ->setLastName('User')
-              ->setRoles(['ROLE_ADMIN']);
+            ->setPassword($this->passwordHasher->hashPassword($admin, 'JeSuisAdmin'))
+            ->setFirstName('AdminBeau')
+            ->setLastName('Gosse')
+            ->setRoles(['ROLE_ADMIN']);
         $manager->persist($admin);
 
         $user = new User();
         $user->setEmail('user@example.com')
-             ->setPassword(password_hash('userpassword', PASSWORD_BCRYPT))
-             ->setFirstName('Eikichi')
-             ->setLastName('Onizuka')
-             ->setRoles(['ROLE_USER']);
+            ->setPassword($this->passwordHasher->hashPassword($user, 'BonSangDeBonsai'))
+            ->setFirstName('Eikichi')
+            ->setLastName('Onizuka')
+            ->setRoles(['ROLE_USER']);
         $manager->persist($user);
 
         $banned = new User();
         $banned->setEmail('banned@example.com')
-               ->setPassword(password_hash('bannedpassword', PASSWORD_BCRYPT))
-               ->setFirstName('Banned')
-               ->setLastName('User')
-               ->setRoles(['ROLE_BANNED']);
+            ->setPassword($this->passwordHasher->hashPassword($banned, 'AuRevoir'))
+            ->setFirstName('Le')
+            ->setLastName('Banni')
+            ->setRoles(['ROLE_BANNED']);
         $manager->persist($banned);
+
 
 
         $article1 = new Article();

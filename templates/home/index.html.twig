@@ -1,0 +1,124 @@
+{% extends 'base.html.twig' %}
+
+{% block title %}Bienvenue sur le Blog{% endblock %}
+
+{% block stylesheets %}
+<style>
+    body {
+        font-family: Arial, sans-serif;
+        background-color: #f4f4f9;
+        margin: 0;
+        padding: 0;
+    }
+
+    .header {
+        background-color: #007BFF;
+        color: white;
+        padding: 10px 20px;
+        display: flex;
+        justify-content: space-between;
+        align-items: center;
+        position: sticky;
+        top: 0;
+        z-index: 1000;
+    }
+
+    .header h1 {
+        margin: 0;
+    }
+
+    .header .logout-button {
+        color: white;
+        text-decoration: none;
+        font-weight: bold;
+        padding: 8px 15px;
+        background-color: #FF4B4B;
+        border-radius: 5px;
+        transition: background-color 0.3s ease;
+    }
+
+    .header .logout-button:hover {
+        background-color: #cc0000;
+    }
+
+    .categories {
+        display: flex;
+        justify-content: center;
+        padding: 20px 0;
+    }
+
+    .categories .category {
+        margin: 0 10px;
+        text-align: center;
+    }
+
+    .categories img {
+        width: 100px;
+        height: 100px;
+        border-radius: 50%;
+        margin-bottom: 10px;
+        transition: transform 0.3s ease;
+    }
+
+    .categories img:hover {
+        transform: scale(1.1);
+    }
+
+    .articles {
+        padding: 20px;
+    }
+
+    .article {
+        margin-bottom: 20px;
+        padding: 15px;
+        background: white;
+        border-radius: 10px;
+        box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
+    }
+
+    .article h3 {
+        margin: 0 0 10px 0;
+    }
+
+    .comments {
+        margin-top: 20px;
+    }
+</style>
+
+{% endblock %}
+
+{% block body %}
+<header>
+    <h1>Bienvenue {{ app.user ? app.user.firstName ~ ' ' ~ app.user.lastName : 'sur le Blog' }}</h1>
+    <p>
+        {% if app.user %}
+        {% else %}
+            <a href="{{ path('app_login') }}" style="color: #0a0;">Se connecter</a>
+        {% endif %}
+    </p>
+</header>
+
+<section class="categories">
+    {% for category in categories %}
+        <div class="category">
+            <a href="{{ path('app_category_articles', { id: category.id }) }}">
+                <img src="{{ asset('images/' ~ category.name | lower ~ '.jpg') }}" alt="{{ category.name }}">
+                <p>{{ category.name }}</p>
+            </a>
+        </div>
+    {% endfor %}
+</section>
+
+
+<section class="articles">
+    <h2>Derniers articles</h2>
+    {% for article in articles %}
+        <div class="article">
+            <h3><a href="{{ path('app_article_details', { id: article.id }) }}">{{ article.title }}</a></h3>
+            <p>Catégorie : <strong>{{ article.category.name }}</strong></p>
+            <p>Posté par : {{ article.author.firstName }} {{ article.author.lastName }}</p>
+            <p>{{ article.content | slice(0, 100) ~ '...' }}</p>
+        </div>
+    {% endfor %}
+</section>
+{% endblock %}

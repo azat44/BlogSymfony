@@ -1,0 +1,25 @@
+{% extends 'base.html.twig' %}
+
+{% block title %}{{ article.title }}{% endblock %}
+
+{% block body %}
+<header>
+    <h1>{{ article.title }}</h1>
+</header>
+
+<section>
+    <p><strong>Catégorie :</strong> {{ article.category.name }}</p>
+    <p><strong>Posté par :</strong> {{ article.author.firstName }} {{ article.author.lastName }}</p>
+    <p>{{ article.content }}</p>
+</section>
+
+<section class="comments">
+    <h2>Commentaires</h2>
+    {% for comment in comments %}
+        <div>
+            <p>{{ comment.content }}</p>
+            <p>- Par {{ comment.author.firstName }} (Sur : {{ comment.article.title }})</p>
+        </div>
+    {% endfor %}
+</section>
+{% endblock %}
