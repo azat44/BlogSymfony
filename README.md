@@ -5,6 +5,7 @@
 ## 3. Ensuite exécuter la commande php bin/console doctrine:migrations:migrate
 ## 4. À la suite exécuter php bin/console doctrine:fixtures:load
 ## 5. Démarrer le projet avec symfony server:start
+## 6. Le plus important quand le serveur se lance http://127.0.0.1:8000 mettez http://127.0.0.1:8000/login pour profiter correctement de l'expérience du professeur Onizuka
 
 # Informations
 
