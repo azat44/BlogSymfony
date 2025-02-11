@@ -83,8 +83,42 @@
     .comments {
         margin-top: 20px;
     }
-</style>
 
+    .punchline-section {
+        padding: 20px;
+        background: white;
+        border-radius: 10px;
+        box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
+        margin: 20px auto;
+        max-width: 600px;
+        text-align: center;
+    }
+
+    .punchline-section button {
+        padding: 10px 20px;
+        background-color: #FF9900;
+        color: white;
+        font-weight: bold;
+        border: none;
+        border-radius: 5px;
+        cursor: pointer;
+        transition: background-color 0.3s ease;
+        margin-top: 10px;
+    }
+
+    .punchline-section button:hover {
+        background-color: #cc7700;
+    }
+
+    .punchline-response {
+        margin-top: 20px;
+        padding: 15px;
+        font-style: italic;
+        background: #f9f9f9;
+        border-radius: 5px;
+        border: 1px solid #ddd;
+    }
+</style>
 {% endblock %}
 
 {% block body %}
@@ -109,7 +143,11 @@
     {% endfor %}
 </section>
 
-
+<section class="punchline-section">
+    <h2>Génère moi une punchline bien sale à la Onizula aka le GOAT</h2>
+    <button id="generate-punchline">Obtenir une punchline</button>
+    <div id="punchline-response" class="punchline-response"></div>
+</section>
 
 <section class="articles">
     <h2>Derniers articles</h2>
@@ -122,4 +160,21 @@
         </div>
     {% endfor %}
 </section>
+
+<script>
+    document.getElementById('generate-punchline').addEventListener('click', function() {
+        fetch('/onizuka/punchline', {
+            method: 'POST'
+        })
+        .then(response => response.json())
+        .then(data => {
+            document.getElementById('punchline-response').innerText = 
+                data.choices[0]?.message?.content || "Onizuka réfléchit encore...";
+        })
+        .catch(error => {
+            document.getElementById('punchline-response').innerText = "Erreur, essaye encore n'abandonne pas Onizuka t'attends !";
+        });
+    });
+</script>
+
 {% endblock %}
