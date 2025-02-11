@@ -27,7 +27,7 @@ class ApiService
                 ],
                 'json' => [
                     'model' => 'gpt-4o',
-                    'messages' => [['role' => 'user', 'content' => "Sors moi des phhr le professeur Eikichi Onizuka directement sans me faire de résumer ne dis rien d'autres"]],
+                    'messages' => [['role' => 'user', 'content' => "Sors moi des punchlines iconique du professeur Eikichi Onizuka directement sans me faire de résumer ne dis rien d'autres"]],
                     'max_tokens' => 300 
                 ],
             ]);
